@@ -1,18 +1,19 @@
-Project: arcdps_exporter
+Project: arcdps_reporter
 Date: 2025-08-08
 
 This is an extremely barebones arcdps plugin written in Rust using the arcdps crate.
 
 Key files:
 - Cargo.toml: Contains project metadata and dependencies
+- Cargo.lock: Generated lock file for reproducible builds
 - src/lib.rs: Contains the plugin implementation using arcdps::arcdps_export! macro
-- .gitignore: Standard Rust project gitignore
+- .gitignore: Standard Rust project gitignore (doesn't ignore Cargo.lock)
 - llms.txt: This file - contains project context and memory
 
 Build process:
 - The project is configured to build as a cdylib (DLL)
 - Use "cargo build --release" to build the plugin
-- Output is in target/release/libarcdps_exporter.so (or .dll on Windows)
+- Output is in target/release/libarcdps_reporter.so (or .dll on Windows)
 - The DLL can be renamed to .dll for Windows compatibility
 
 Plugin functionality:
@@ -54,7 +55,7 @@ Common issues and solutions:
 - DLL naming: On Linux, the output is .so, on Windows it should be .dll
 
 Project structure:
-arcdps_exporter/
+arcdps_reporter/
 ├── Cargo.toml
 ├── src/
 │   └── lib.rs
@@ -76,3 +77,9 @@ Notes:
   - Integration with other systems
 - Remember to change the plugin signature to a unique value
 - Consider adding proper error handling and logging
+
+Repository information:
+- GitHub URL: https://github.com/dmizelle/arcdps_reporter
+- Created: 2025-08-08
+- Status: Initial commit pushed with barebones plugin implementation
+- Branch: master
