@@ -1,0 +1,78 @@
+Project: arcdps_exporter
+Date: 2025-08-08
+
+This is an extremely barebones arcdps plugin written in Rust using the arcdps crate.
+
+Key files:
+- Cargo.toml: Contains project metadata and dependencies
+- src/lib.rs: Contains the plugin implementation using arcdps::arcdps_export! macro
+- .gitignore: Standard Rust project gitignore
+- llms.txt: This file - contains project context and memory
+
+Build process:
+- The project is configured to build as a cdylib (DLL)
+- Use "cargo build --release" to build the plugin
+- Output is in target/release/libarcdps_exporter.so (or .dll on Windows)
+- The DLL can be renamed to .dll for Windows compatibility
+
+Plugin functionality:
+- Uses the raw_combat callback to receive combat events
+- Currently just prints a message when combat events occur or when initialized
+- Uses the arcdps::arcdps_export! macro to define the plugin
+- The plugin signature (sig) is set to 0x12345678 - this should be changed to a unique value
+- The callback function signature must match exactly what arcdps expects:
+  - unsafe extern "C" fn with specific parameter types
+  - Parameters: ev, src, dst, skill_name, id, revision
+
+Dependencies:
+- arcdps = "0.11.2" - provides the arcdps plugin bindings
+
+Development history:
+- Created new Rust project with cargo
+- Added arcdps dependency
+- Configured as cdylib in Cargo.toml
+- Implemented basic plugin using arcdps::arcdps_export! macro
+- Fixed callback signature issues
+- Successfully built the DLL
+
+Next steps:
+- Add actual plugin functionality
+- Implement additional callbacks if needed (imgui, options, etc.)
+- Test with actual arcdps environment
+- Consider adding configuration options
+- Implement proper error handling
+
+Technical details:
+- The arcdps::arcdps_export! macro generates the necessary boilerplate
+- The raw_combat callback receives combat events from arcdps
+- The plugin can access various game data through the arcdps API
+- Memory safety is handled by Rust's ownership system
+
+Common issues and solutions:
+- Callback signature mismatch: Ensure the function signature exactly matches what arcdps expects
+- Macro usage: Use arcdps::arcdps_export! not just arcdps_export!
+- DLL naming: On Linux, the output is .so, on Windows it should be .dll
+
+Project structure:
+arcdps_exporter/
+├── Cargo.toml
+├── src/
+│   └── lib.rs
+├── .gitignore
+├── llms.txt
+└── target/ (ignored)
+
+Useful commands:
+- cargo build --release: Build the plugin in release mode
+- cargo check: Quickly check for compilation errors
+- cargo doc --open: Open the documentation
+
+Notes:
+- The plugin is currently very minimal and doesn't do much beyond basic initialization
+- For a real plugin, you'd want to add actual functionality like:
+  - Combat logging
+  - UI elements
+  - Data analysis
+  - Integration with other systems
+- Remember to change the plugin signature to a unique value
+- Consider adding proper error handling and logging
